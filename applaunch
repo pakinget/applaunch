@@ -1,0 +1,25 @@
+
+#!/bin/bash
+
+cd /usr/share/applications
+
+echo What are we launching today, comrade?
+
+read app_name
+
+grep_output=$(grep -i Name=$app_name *)
+
+filename_length=${#grep_output}
+let filename_length-=6
+let filename_length-=${#app_name}
+
+filename="${grep_output:0:${filename_length}}"
+
+grep_exec_path=$(grep Exec= $filename)
+
+grep_exec_path_length=${#grep_exec_path}
+let grep_exec_path_length-=5
+
+grep_exec="${grep_exec_path:5:${grep_exec_path_length}}"
+
+exec ${grep_exec} &
